@@ -1,0 +1,22 @@
+{% extends 'main.html' %}
+
+{% block data %}
+    <h2>Exchange Rate</h2>
+
+    <table>
+        <tr>
+            <th>r030</th>
+            <th>txt</th>
+            <th>rate</th>
+            <th>cc</th>
+            <th>exchangedate</th>
+        </tr>
+        {% for line in data %}
+        <tr>
+            {% for k, v in line.items %}
+                <td>{{ v }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

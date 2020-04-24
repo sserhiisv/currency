@@ -1,0 +1,123 @@
+openapi: "3.0.0"
+info:
+  description: "Currency Project API schema"
+  version: "1.0.0"
+  title: "Currency exchange rate API"
+tags:
+- name: "exchange_rate"
+  description: "Currencies exchange rate"
+- name: "history_rate"
+  description: "Currency exchange rate history"
+
+servers:
+  - url: http://localhost:8000/api/v1
+
+paths:
+  /exchange_rate:
+    get:
+      tags:
+      - "exchange_rate"
+      summary: "Currencies exchange rate"
+      description: "Currencies exchange rate"
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          schema:
+            type: "string"
+            format: "Token <token>"
+          required: true
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  items:
+                    type: "array"
+                    description: "Schema info"
+                    items:
+                      type: "object"
+                      properties:
+                        r030:
+                          type: "string"
+                          description: "Currency code"
+                        txt:
+                          type: "string"
+                          description: "Currency name text"
+                        rate:
+                          type: "number"
+                          description: "Exchange rate"
+                        cc:
+                          type: "string"
+                          description: "Currency code ISO 4217"
+                        exchangedate:
+                          type: "string"
+                          description: "Date of exchange rate"
+  /history_rate:
+    post:
+      tags:
+      - "history_rate"
+      summary: "History of currency exchange rate"
+      parameters:
+        - in: "header"
+          name: "Authorization"
+          schema:
+            type: "string"
+            format: "Token <token>"
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: "object"
+              properties:
+                date_start:
+                  type: "string"
+                date_end:
+                  type: "string"
+                currency:
+                  type: "string"
+            example:
+              date_start:
+                summary: "Format: MM/DD/YYYY"
+                value:
+                  "01/02/2020"
+              date_end:
+                summary: "Format: MM/DD/YYYY"
+                value:
+                  "01/05/2020"
+              currency:
+                summary: "Format: USD (ISO 4217)"
+                value:
+                  "USD"
+      responses:
+        200:
+          description: "OK"
+          content:
+            application/json:
+              schema:
+                type: "object"
+                properties:
+                  items:
+                    type: "array"
+                    description: "Schema info"
+                    items:
+                      type: "object"
+                      properties:
+                        r030:
+                          type: "string"
+                          description: "Currency code"
+                        txt:
+                          type: "string"
+                          description: "Currency name text"
+                        rate:
+                          type: "number"
+                          description: "Exchange rate"
+                        cc:
+                          type: "string"
+                          description: "Currency code ISO 4217"
+                        exchangedate:
+                          type: "string"
+                          description: "Date of exchange rate"

@@ -1,0 +1,51 @@
+{% extends 'main.html' %}
+
+{% block data %}
+    <h2>History rate</h2>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    <form method="post" action="{% url 'history_rate' %}">
+        {% csrf_token %}
+        <label>Currency: </label>
+        <select name="currency">
+            {% for y in currencies %}
+                <option value="{{ y }}">{{ y }}</option>
+            {% endfor %}
+        </select>
+
+        <br/>
+
+        <input type="text" name="daterange" value="{% now 'm/d/Y' %} - {% now 'm/d/Y' %}" />
+        <script>
+            $(function() {
+              $('input[name="daterange"]').daterangepicker();
+            });
+        </script>
+        <input type="submit" value="Submit">
+    </form>
+
+    <!--test comment-->
+
+    {% if data %}
+        <table>
+            <tr>
+                <th>r030</th>
+                <th>txt</th>
+                <th>rate</th>
+                <th>cc</th>
+                <th>exchangedate</th>
+            </tr>
+            {% for line in data %}
+            <tr>
+                {% for k, v in line.items %}
+                    <td>{{ v }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+{% endblock %}

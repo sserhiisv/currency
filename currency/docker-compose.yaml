@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    container_name: web
+    command: bash -c "gunicorn currency.wsgi -b 0.0.0.0:8001 --threads 24"
+    volumes:
+    - ./static:/etc/currency/static
+
+  nginx:
+    image: nginx:latest
+    restart: always
+    build: ./nginx/
+    ports:
+    - "80:80"
+    links:
+    - web:web
+    volumes:
+    - ./nginx/sites-enabled/nginx.conf:/etc/nginx/conf.d/nginx.conf
+    - ./static:/static
+    depends_on:
+    - web

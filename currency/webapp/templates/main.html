@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block main %}
+    {% if user.is_authenticated %}
+        <a title="LogOut" href="{% url 'logout' %}">LogOut</a>
+    {% else %}
+        <a title="LogIn" href="{% url 'login' %}">SignIn</a>
+        <a title="LogIn" href="{% url 'signup' %}">SignUp</a>
+    {% endif %}
+    <h2>Currency Tracker</h2>
+
+    <a title="Exchange Rate" href="{% url 'exchange_rate' %}">Exchange Rate</a>
+    <a title="History Rate" href="{% url 'history_rate' %}">History Rate</a>
+
+    {% block data %}{% endblock %}
+{% endblock %}
